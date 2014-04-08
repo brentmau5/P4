@@ -3,10 +3,11 @@ import java.util.List;
 public class Node {
 	private int x;
 	private int y;
-	private int hCost;
-	private int fCost;
+	private double hCost;
+	private double fCost;
+	private int hp;
 	private Node parent;
-	private int gCost;
+	private double gCost;
 	private List<Node> neighbors = new LinkedList<Node>();
 	/**
 	 * Creates a node for the A* search
@@ -16,13 +17,19 @@ public class Node {
 	 * @param hCost the heuristic cost from the 
 	 * @param parent the parent of the Node
 	 */
-	public Node(int x, int y, int totalCost, int hCost, Node parent) {
+	public Node(int x, int y,double totalCost, double hCost, Node parent) {
 		this.x = x;
 		this.y = y;
 		this.gCost = totalCost;
 		this.parent = parent;
 		this.hCost = hCost;
 		fCost = gCost + hCost;
+	}
+	public void setHP(int hp){
+		this.hp= hp;
+	}
+	public int getHP(){
+		return hp;
 	}
 	public int getX() {
 		return x;
@@ -33,13 +40,13 @@ public class Node {
 	public Node getParent() {
 		return parent;
 	}
-	public int gethCost() {
+	public double gethCost() {
 		return hCost;
 	}
-	public int getfCost() {
+	public double getfCost() {
 		return fCost;
 	}
-	public int getgCost() {
+	public double getgCost() {
 		return gCost;
 	}
 	public List<Node> getNeighbors() {

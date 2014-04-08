@@ -8,6 +8,7 @@ public class BoardNode {
 		private boolean goldMine = false;
 		private boolean tree = false;
 		private double probability = .1;
+		private double cost=0;
 		private byte hit = UNKNOWN;
 		private boolean seen = false;
 		private boolean steppedOn = false;
@@ -16,6 +17,7 @@ public class BoardNode {
 		public boolean isOpen() {
 		return open;
 	}
+			
 		public void setOpen(boolean open) {
 		this.open = open;
 	}
@@ -23,11 +25,23 @@ public class BoardNode {
 		
 	return tower;	
 }
+	public void heuristic()
+	{
+		cost = 0;
+		cost += probability*100;
+		if(hit==INRANGE){
+			cost += 10000;
+		}
+		this.cost = cost;
+	}
 	public void setTower(boolean tower) {
 		this.tower = tower;
 	}
 	public boolean isGoldMine() {
 		return goldMine;
+	}
+	public double getCost(){
+		return cost;
 	}
 	public void setGoldMine(boolean goldMine) {
 		this.goldMine = goldMine;
