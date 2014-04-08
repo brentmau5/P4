@@ -35,43 +35,75 @@ import java.io.InputStream;import java.io.OutputStream;import java.util.ArrayL
 	 		if(board[node.getX()+1][node.getY()].getHit() == 1){
 	 			guessHP-=13;
 	 		}
-	 		double added = (1/guessHP) * (board[node.getX()+1][node.getY()].getProbability()*10000);
+	 		double added = 0;
+	 		if (guessHP <=0){
+	 			added = Double.MAX_VALUE/10;
+	 		}
+	 		else added = (1/guessHP) * (board[node.getX()+1][node.getY()].getProbability()*10000);
 	 			 		return new Node(node.getX() + 1, node.getY(), node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX() + 1, node.getY(), x, y)+added + board[node.getX()+1][node.getY()].getCost(), node);	}	/**	 	 * This creates a node in the direction, it uses the total cost of the	 	 * current node to make that the new nodes g cost and then uses the	 	 * chebyshev distance for the new nodes h cost.	 	 * 	 	 * @param node	 	 *            the parent of the new node	 	 * @return the new node created	 	 */	 	private Node moveNorth(Node node,int x, int y) {
 	 		int guessHP = node.getHP();
 	 		if(board[node.getX()][node.getY()-1].getHit() == 1){
 	 			guessHP-=13;
 	 		}
-	 		double added = (1/guessHP) * (board[node.getX()][node.getY()-1].getProbability()*10000);	 		return new Node(node.getX(), node.getY() - 1, node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX(), node.getY() - 1, x, y)+added+ board[node.getX()][node.getY()-1].getCost(), node);	}	/**	 	 * This creates a node in the direction, it uses the total cost of the	 	 * current node to make that the new nodes g cost and then uses the	 	 * chebyshev distance for the new nodes h cost.	 	 * 	 	 * @param node	 	 *            the parent of the new node	 	 * @return the new node created	 	 */	 	private Node moveNortheast(Node node,int x, int y) {
+	 		double added = 0;
+	 		if (guessHP <=0){
+	 			added = Double.MAX_VALUE/10;
+	 		}
+	 		else added = (1/guessHP) * (board[node.getX()][node.getY()-1].getProbability()*10000);	 		return new Node(node.getX(), node.getY() - 1, node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX(), node.getY() - 1, x, y)+added+ board[node.getX()][node.getY()-1].getCost(), node);	}	/**	 	 * This creates a node in the direction, it uses the total cost of the	 	 * current node to make that the new nodes g cost and then uses the	 	 * chebyshev distance for the new nodes h cost.	 	 * 	 	 * @param node	 	 *            the parent of the new node	 	 * @return the new node created	 	 */	 	private Node moveNortheast(Node node,int x, int y) {
 	 		int guessHP = node.getHP();
 	 		if(board[node.getX()+1][node.getY()-1].getHit() == 1){
 	 			guessHP-=13;
 	 		}
-	 		double added = (1/guessHP) * (board[node.getX()+1][node.getY()-1].getProbability()*10000);	 		return new Node(node.getX() + 1, node.getY() - 1, node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX() + 1, node.getY() - 1, x, y)+added+ board[node.getX()+1][node.getY()-1].getCost(), node);	}	/**	 	 * This creates a node in the direction, it uses the total cost of the	 	 * current node to make that the new nodes g cost and then uses the	 	 * chebyshev distance for the new nodes h cost.	 	 * 	 	 * @param node	 	 *            the parent of the new node	 	 * @return the new node created	 	 */	 	private Node moveNorthwest(Node node,int x, int y) {
+	 		double added = 0;
+	 		if (guessHP <=0){
+	 			added = Double.MAX_VALUE/10;
+	 		}
+	 		else added = (1/guessHP) * (board[node.getX()+1][node.getY()-1].getProbability()*10000);	 		return new Node(node.getX() + 1, node.getY() - 1, node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX() + 1, node.getY() - 1, x, y)+added+ board[node.getX()+1][node.getY()-1].getCost(), node);	}	/**	 	 * This creates a node in the direction, it uses the total cost of the	 	 * current node to make that the new nodes g cost and then uses the	 	 * chebyshev distance for the new nodes h cost.	 	 * 	 	 * @param node	 	 *            the parent of the new node	 	 * @return the new node created	 	 */	 	private Node moveNorthwest(Node node,int x, int y) {
 	 		int guessHP = node.getHP();
 	 		if(board[node.getX()-1][node.getY()-1].getHit() == 1){
 	 			guessHP-=13;
 	 		}
-	 		double added = (1/guessHP) * (board[node.getX()-1][node.getY()-1].getProbability()*10000);	 		return new Node(node.getX() - 1, node.getY() - 1, node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX() - 1, node.getY() - 1, x, y)+added+ board[node.getX()-1][node.getY()-1].getCost(), node);	}	/**	 	 * This creates a node in the direction, it uses the total cost of the	 	 * current node to make that the new nodes g cost and then uses the	 	 * chebyshev distance for the new nodes h cost.	 	 * 	 	 * @param node	 	 *            the parent of the new node	 	 * @return the new node created	 	 */	 	private Node moveSouth(Node node,int x, int y) {
+	 		double added = 0;
+	 		if (guessHP <=0){
+	 			added = Double.MAX_VALUE/10;
+	 		}
+	 		else added = (1/guessHP) * (board[node.getX()-1][node.getY()-1].getProbability()*10000);	 		return new Node(node.getX() - 1, node.getY() - 1, node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX() - 1, node.getY() - 1, x, y)+added+ board[node.getX()-1][node.getY()-1].getCost(), node);	}	/**	 	 * This creates a node in the direction, it uses the total cost of the	 	 * current node to make that the new nodes g cost and then uses the	 	 * chebyshev distance for the new nodes h cost.	 	 * 	 	 * @param node	 	 *            the parent of the new node	 	 * @return the new node created	 	 */	 	private Node moveSouth(Node node,int x, int y) {
 	 		int guessHP = node.getHP();
 	 		if(board[node.getX()][node.getY()+1].getHit() == 1){
 	 			guessHP-=13;
 	 		}
-	 		double added = (1/guessHP) * (board[node.getX()][node.getY()+1].getProbability()*10000);	 		return new Node(node.getX(), node.getY() + 1, node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX(), node.getY() + 1,x,y)+added+ board[node.getX()][node.getY()+1].getCost(), node);	}	/**	 	 * This creates a node in the direction, it uses the total cost of the	 	 * current node to make that the new nodes g cost and then uses the	 	 * chebyshev distance for the new nodes h cost.	 	 * 	 	 * @param node	 	 *            the parent of the new node	 	 * @return the new node created	 	 */	 	private Node moveSoutheast(Node node,int x, int y) {
+	 		double added = 0;
+	 		if (guessHP <=0){
+	 			added = Double.MAX_VALUE/10;
+	 		}
+	 		else added = (1/guessHP) * (board[node.getX()][node.getY()+1].getProbability()*10000);	 		return new Node(node.getX(), node.getY() + 1, node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX(), node.getY() + 1,x,y)+added+ board[node.getX()][node.getY()+1].getCost(), node);	}	/**	 	 * This creates a node in the direction, it uses the total cost of the	 	 * current node to make that the new nodes g cost and then uses the	 	 * chebyshev distance for the new nodes h cost.	 	 * 	 	 * @param node	 	 *            the parent of the new node	 	 * @return the new node created	 	 */	 	private Node moveSoutheast(Node node,int x, int y) {
 	 		int guessHP = node.getHP();
 	 		if(board[node.getX()+1][node.getY()+1].getHit() == 1){
 	 			guessHP-=13;
 	 		}
-	 		double added = (1/guessHP) * (board[node.getX()+1][node.getY()+1].getProbability()*10000);	 		return new Node(node.getX() + 1, node.getY() + 1, node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX() + 1,	 						node.getY() + 1, x,	 						y)+added+ board[node.getX()+1][node.getY()+1].getCost(), node);	}	/**	 	 * This creates a node in the direction, it uses the total cost of the	 	 * current node to make that the new nodes g cost and then uses the	 	 * chebyshev distance for the new nodes h cost.	 	 * 	 	 * @param node	 	 *            the parent of the new node	 	 * @return the new node created	 	 */	 	private Node moveSouthwest(Node node,int x, int y) {
+	 		double added = 0;
+	 		if (guessHP <=0){
+	 			added = Double.MAX_VALUE/10;
+	 		}
+	 		else added = (1/guessHP) * (board[node.getX()+1][node.getY()+1].getProbability()*10000);	 		return new Node(node.getX() + 1, node.getY() + 1, node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX() + 1,	 						node.getY() + 1, x,	 						y)+added+ board[node.getX()+1][node.getY()+1].getCost(), node);	}	/**	 	 * This creates a node in the direction, it uses the total cost of the	 	 * current node to make that the new nodes g cost and then uses the	 	 * chebyshev distance for the new nodes h cost.	 	 * 	 	 * @param node	 	 *            the parent of the new node	 	 * @return the new node created	 	 */	 	private Node moveSouthwest(Node node,int x, int y) {
 	 		int guessHP = node.getHP();
 	 		if(board[node.getX()-1][node.getY()+1].getHit() == 1){
 	 			guessHP-=13;
 	 		}
-	 		double added = (1/guessHP) * (board[node.getX()-1][node.getY()+1].getProbability()*10000);	 		return new Node(node.getX() - 1, node.getY() + 1, node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX() - 1,	 						node.getY() + 1, x,	 						y)+added+ board[node.getX()-1][node.getY()+1].getCost(), node);	 	}	/**	 	 * This creates a node in the direction, it uses the total cost of the	 	 * current node to make that the new nodes g cost and then uses the	 	 * chebyshev distance for the new nodes h cost.	 	 * 	 	 * @param node	 	 *            the parent of the new node	 	 * @return the new node created	 	 */	 	private Node moveWest(Node node,int x, int y) {
+	 		double added = 0;
+	 		if (guessHP <=0){
+	 			added = Double.MAX_VALUE/10;
+	 		}
+	 		else added = (1/guessHP) * (board[node.getX()-1][node.getY()+1].getProbability()*10000);	 		return new Node(node.getX() - 1, node.getY() + 1, node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX() - 1,	 						node.getY() + 1, x,	 						y)+added+ board[node.getX()-1][node.getY()+1].getCost(), node);	 	}	/**	 	 * This creates a node in the direction, it uses the total cost of the	 	 * current node to make that the new nodes g cost and then uses the	 	 * chebyshev distance for the new nodes h cost.	 	 * 	 	 * @param node	 	 *            the parent of the new node	 	 * @return the new node created	 	 */	 	private Node moveWest(Node node,int x, int y) {
 	 		int guessHP = node.getHP();
 	 		if(board[node.getX()-1][node.getY()].getHit() == 1){
 	 			guessHP-=13;
 	 		}
-	 		double added = (1/guessHP) * (board[node.getX()-1][node.getY()].getProbability()*10000);	 		return new Node(node.getX() - 1, node.getY(), node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX() - 1, node.getY(),	 						x,	 						y)+added+ board[node.getX()-1][node.getY()].getCost(), node);	}	 	private boolean goal(Node node, int goalX, int goalY) {	 		int xDiff = Math.abs(goalX - node.getX());	 		int yDiff = Math.abs(goalY- node.getY());	 		if (xDiff == 0) {	 			return yDiff == 1;	 		}	 		if (yDiff == 0)	 			return xDiff == 1;	 		return xDiff == 1 && yDiff == 1;	 	}	/**	 	 * This checks a node with a list to see that when there are two nodes that	 	 * are in the same position that the f cost of the node is less than the	 	 * cost of the node in the closed list. if that cost is less than we want to	 	 * add that node to the open list because it might be a more optimal path	 	 * 	 	 * @param neighbor	 	 *            the node to check with every node in the closed list	 	 * @param closedList	 	 *            the current list of closed nodes	 	 * @return true if the node is more optimal or false if it is not	 	 */	 	private boolean checkClosedList(Node neighbor, List<Node> closedList) {	 		for (Node check : closedList) {	 			if (check.getX() == neighbor.getX()	 					&& check.getY() == neighbor.getY()	 					&& neighbor.getfCost() > check.getfCost())	 				return true;	 		}	 		return false;	 	}	 	public Coordinate createGoal(Unit.UnitView unit,StateView state){	 	if (goldMines.isEmpty()){	 			//explore	 		return new Coordinate(20,1);	 		//if (oldHp.get(unit.getID())>unit.getHP()){	 			//look for tower	 		//}	 		//else{return new Coordinate(state.getXExtent()-1,state.getYExtent()-1);}	 	}	 	else if(unit.getCargoAmount()==0){	 		return new Coordinate(goldMines.get(0).getX(),goldMines.get(0).getY());	 	}	 	else{	 		UnitView townhall = state.getUnit(townhalls.get(0));	 		return new Coordinate(townhall.getXPosition(),townhall.getYPosition());	 	}	 	//return null;	 }
+	 		double added = 0;
+	 		if (guessHP <=0){
+	 			added = Double.MAX_VALUE/10;
+	 		}
+	 		else added = (1/guessHP) * (board[node.getX()-1][node.getY()].getProbability()*10000);	 		return new Node(node.getX() - 1, node.getY(), node.getfCost(),	 				DistanceMetrics.chebyshevDistance(node.getX() - 1, node.getY(),	 						x,	 						y)+added+ board[node.getX()-1][node.getY()].getCost(), node);	}	 	private boolean goal(Node node, int goalX, int goalY) {	 		int xDiff = Math.abs(goalX - node.getX());	 		int yDiff = Math.abs(goalY- node.getY());	 		if (xDiff == 0) {	 			return yDiff == 1;	 		}	 		if (yDiff == 0)	 			return xDiff == 1;	 		return xDiff == 1 && yDiff == 1;	 	}	/**	 	 * This checks a node with a list to see that when there are two nodes that	 	 * are in the same position that the f cost of the node is less than the	 	 * cost of the node in the closed list. if that cost is less than we want to	 	 * add that node to the open list because it might be a more optimal path	 	 * 	 	 * @param neighbor	 	 *            the node to check with every node in the closed list	 	 * @param closedList	 	 *            the current list of closed nodes	 	 * @return true if the node is more optimal or false if it is not	 	 */	 	private boolean checkClosedList(Node neighbor, List<Node> closedList) {	 		for (Node check : closedList) {	 			if (check.getX() == neighbor.getX()	 					&& check.getY() == neighbor.getY()	 					&& neighbor.getfCost() > check.getfCost())	 				return true;	 		}	 		return false;	 	}	 	public Coordinate createGoal(Unit.UnitView unit,StateView state){	 	if (goldMines.isEmpty()){	 			//explore	 		return new Coordinate(20,1);	 		//if (oldHp.get(unit.getID())>unit.getHP()){	 			//look for tower	 		//}	 		//else{return new Coordinate(state.getXExtent()-1,state.getYExtent()-1);}	 	}	 	else if(unit.getCargoAmount()==0){	 		return new Coordinate(goldMines.get(0).getX(),goldMines.get(0).getY());	 	}	 	else{	 		UnitView townhall = state.getUnit(townhalls.get(0));	 		return new Coordinate(townhall.getXPosition(),townhall.getYPosition());	 	}	 	//return null;	 }
 	 public Direction directionFromUnit(Unit.UnitView unit,int x,int y)
 	 {
 		 Node n = new Node(x,y,0,0,null);
