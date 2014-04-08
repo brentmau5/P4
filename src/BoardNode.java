@@ -27,11 +27,12 @@ public class BoardNode {
 }
 	public void heuristic()
 	{
-		cost = 0;
-		cost += probability*100;
+		double cost = 0;
 		if(hit==INRANGE){
-			cost += 10000;
+			cost += 1000000;
 		}
+		else
+			cost+= probability*100000;
 		this.cost = cost;
 	}
 	public void setTower(boolean tower) {
