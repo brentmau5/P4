@@ -22,6 +22,9 @@ import java.io.InputStream;import java.io.OutputStream;import java.util.ArrayL
 		}
 		goldMines.add(new Coordinate(x,y));
 	}	public void checkSpaces(Unit.UnitView unit,State.StateView state){		int startX = unit.getXPosition()-2;		int startY = unit.getYPosition()-2;		int endX = unit.getXPosition()+2;		int endY = unit.getYPosition()+2;		int oldHealth = oldHp.get(unit.getID());		int difference = oldHealth - unit.getHP();
+		if (difference >0){
+			board[oldSpot.get(unit.getID()).getX()][oldSpot.get(unit.getID()).getY()].setHit((byte)1);
+		}
 		oldHp.put(unit.getID(), unit.getHP());		double prob = board[oldSpot.get(unit.getID()).getX()][oldSpot.get(unit.getID()).getY()].getProbability();		if(difference > 13)			prob= .75*.25 + .75*.25 + .75*.75;		else if(difference >0)			prob= .75;		else{
 			if(board[oldSpot.get(unit.getID()).getX()][oldSpot.get(unit.getID()).getY()].getHit() ==0)
 			prob/=2;
@@ -126,8 +129,7 @@ import java.io.InputStream;import java.io.OutputStream;import java.util.ArrayL
 				 board[x][y].heuristic();
 			 }
 		 }
-	 }
-	  	 public Map<Integer, Action> middleStep(StateView state, HistoryView view) {	 	List<Integer> peasants = new ArrayList<Integer>();	 	Map<Integer,Action> builder = new HashMap<Integer,Action>();	 	getUnits(peasants,state);	 	for(Integer peasant: peasants){	 		Unit.UnitView unit = state.getUnit(peasant);	 		checkSpaces(unit,state);
+	 } 	 public Map<Integer, Action> middleStep(StateView state, HistoryView view) {	 	List<Integer> peasants = new ArrayList<Integer>();	 	Map<Integer,Action> builder = new HashMap<Integer,Action>();	 	getUnits(peasants,state);	 	for(Integer peasant: peasants){	 		Unit.UnitView unit = state.getUnit(peasant);	 		checkSpaces(unit,state);
 	 		this.oldSpot.put(peasant, new Coordinate(unit.getXPosition(),unit.getYPosition()));	 	}
 		for(int i = 0; i< state.getYExtent(); i++){
 			for(int j = 0; j < state.getXExtent() ; j++){
