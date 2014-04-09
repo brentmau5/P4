@@ -21,6 +21,18 @@ import java.io.InputStream;import java.io.OutputStream;import java.util.ArrayL
 			}
 		}
 		goldMines.add(new Coordinate(x,y));
+	}
+	
+	public void setAroundTree(int x, int y, StateView state){
+		for(int i = x-2; i< x+2;i++){
+			for(int j = y-2; j< y+2;j++){
+				if(state.inBounds(i, j) && DistanceMetrics.euclideanDistance(i, j, x, y)  <=2 && board[i][j].getProbability() <= .75)
+					board[i][j].setProbability(.75);
+				else if(state.inBounds(i, j) && DistanceMetrics.euclideanDistance(i, j, x, y) <=2 && board[i][j].getProbability() < .5)
+					board[i][j].setProbability(.75);
+			}
+		}
+	
 	}	public void checkSpaces(Unit.UnitView unit,State.StateView state){		int startX = unit.getXPosition()-2;		int startY = unit.getYPosition()-2;		int endX = unit.getXPosition()+2;		int endY = unit.getYPosition()+2;		int oldHealth = oldHp.get(unit.getID());		int difference = oldHealth - unit.getHP();
 		if (difference >0){
 			board[oldSpot.get(unit.getID()).getX()][oldSpot.get(unit.getID()).getY()].setHit((byte)1);
@@ -32,13 +44,14 @@ import java.io.InputStream;import java.io.OutputStream;import java.util.ArrayL
 						space.setSeen(true);
 					}					else if(state.isResourceAt(i,j)){						ResourceNode.ResourceView resource = state.getResourceNode(state.resourceAt(i,j));						if(resource.getType() == ResourceNode.Type.GOLD_MINE){							space.setGoldMine(true);
 							foundGoldMine(i,j);
-						}						else							space.setTree(true);						space.setOpen(false);					}					else if(state.isUnitAt(i,j)){						Unit.UnitView unitAt = state.getUnit(state.unitAt(i,j));						if(unitAt.getTemplateView().getName().equalsIgnoreCase("ScoutTower")){							space.setOpen(false);							space.setTower(true);							towerHere(unitAt, state);						}					}				space.setSeen(true);				}							}		}	}
+						}						else{							space.setTree(true);
+							setAroundTree(i,j,state);
+						}						space.setOpen(false);					}					else if(state.isUnitAt(i,j)){						Unit.UnitView unitAt = state.getUnit(state.unitAt(i,j));						if(unitAt.getTemplateView().getName().equalsIgnoreCase("ScoutTower")){							space.setOpen(false);							space.setTower(true);							towerHere(unitAt, state);						}					}				space.setSeen(true);				}							}		}	}
 	
 	public boolean spaceInTowerRange(int x1, int y1, int x2, int y2){
 		return (DistanceMetrics.euclideanDistance(x1, y1, x2, y2) <=4);
 	}		public void towerHere(Unit.UnitView unit, State.StateView state){
 			int range = unit.getTemplateView().getRange();
-			System.out.println(range);
 		int startX = unit.getXPosition()-range;
 		int startY = unit.getYPosition()-range;
 		int endX = unit.getXPosition()+range;
@@ -140,7 +153,7 @@ import java.io.InputStream;import java.io.OutputStream;import java.util.ArrayL
 				System.out.print(board[j][i].getHit());
 				System.out.print(' ');
 			}
-			System.out.print('\n');
+			System.out.println('\n');
 		}
 	
 		checkSafe(state);
@@ -150,7 +163,7 @@ import java.io.InputStream;import java.io.OutputStream;import java.util.ArrayL
 	 			badMoves.add(new Coordinate(state.getUnit(peasants.get(i)).getXPosition(),state.getUnit(peasants.get(i)).getYPosition()));
 	 		}
 	 	}	 	for(Integer peasant:peasants){	 		Unit.UnitView unit = state.getUnit(peasant);	 		getTownhalls(state);	 		Unit.UnitView townhall = state.getUnit(townhalls.get(0));	 		Coordinate goalP = createGoal(unit,state);	 		if(Math.abs(unit.getXPosition()-goalP.getX())<=1 && Math.abs(unit.getYPosition()-goalP.getY())<=1 && goalP.getX()==townhall.getXPosition() && goalP.getY()==townhall.getYPosition() && unit.getCargoAmount()>0){	 			builder.put(peasant, Action.createCompoundDeposit(peasant, townhalls.get(0)));	 		}	 		else if(Math.abs(unit.getXPosition()-goalP.getX())<=1 && Math.abs(unit.getYPosition()-goalP.getY())<=1 && board[goalP.getX()][goalP.getY()].isGoldMine() && unit.getCargoAmount()==0){	 			builder.put(peasant, Action.createPrimitiveGather(peasant, directionFromUnit(unit,goldMines.get(0).getX(),goldMines.get(0).getY())));
-	 			range = 15;	 		}	 		else{
+	 			range = 6;	 		}	 		else{
 	 			Coordinate nextm = nextBestMove(unit,state,goalP.getX(),goalP.getY(),range);	 		LinkedList<Node> unitPath = path(state,unit,nextm.getX(),nextm.getY());	 		Node next = unitPath.poll();	 		badMoves.add(new Coordinate(next.getX(),next.getY()));	 		Direction nextMove = convertToDirection(next,unit);	 		builder.put(peasant,Action.createPrimitiveMove(peasant,nextMove));	 		}	 	}	 	return builder;	 }	 public Coordinate nextBestMove(UnitView unit,StateView state,int goalX, int goalY,int range){	double cheby = Double.MAX_VALUE;	int bestX = 0;	int bestY = 0;		for(int x = unit.getXPosition() -(2 + range) ;x<=unit.getXPosition() + (2+ range);x++){			for(int y = unit.getYPosition() -(2 + range);y<=unit.getYPosition() + (2 + range);y++){				if(!state.inBounds(x, y) || (x == unit.getXPosition() && y == unit.getYPosition()) ){									}				else{
 				BoardNode n = board[x][y];					double temp = DistanceMetrics.chebyshevDistance(x, y, goalX, goalY)* 50000 + n.getCost();					if(temp < cheby){						cheby = temp;						bestX = x;						bestY = y;
 					}				}			}		}		return new Coordinate(bestX,bestY);	 }		@Override	public void savePlayerData(OutputStream arg0) {		// TODO Auto-generated method stub			}	@Override	public void terminalStep(StateView arg0, HistoryView arg1) {		// TODO Auto-generated method stub			}}
