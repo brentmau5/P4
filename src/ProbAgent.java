@@ -32,14 +32,18 @@ import java.io.InputStream;import java.io.OutputStream;import java.util.ArrayL
 						space.setSeen(true);
 					}					else if(state.isResourceAt(i,j)){						ResourceNode.ResourceView resource = state.getResourceNode(state.resourceAt(i,j));						if(resource.getType() == ResourceNode.Type.GOLD_MINE){							space.setGoldMine(true);
 							foundGoldMine(i,j);
-						}						else							space.setTree(true);						space.setOpen(false);					}					else if(state.isUnitAt(i,j)){						Unit.UnitView unitAt = state.getUnit(state.unitAt(i,j));						if(unitAt.getTemplateView().getName().equalsIgnoreCase("ScoutTower")){							space.setOpen(false);							space.setTower(true);							towerHere(unitAt, state);						}					}				space.setSeen(true);				}							}		}	}		public void towerHere(Unit.UnitView unit, State.StateView state){
+						}						else							space.setTree(true);						space.setOpen(false);					}					else if(state.isUnitAt(i,j)){						Unit.UnitView unitAt = state.getUnit(state.unitAt(i,j));						if(unitAt.getTemplateView().getName().equalsIgnoreCase("ScoutTower")){							space.setOpen(false);							space.setTower(true);							towerHere(unitAt, state);						}					}				space.setSeen(true);				}							}		}	}
+	
+	public boolean spaceInTowerRange(int x1, int y1, int x2, int y2){
+		return (DistanceMetrics.euclideanDistance(x1, y1, x2, y2) <=4);
+	}		public void towerHere(Unit.UnitView unit, State.StateView state){
 			int range = unit.getTemplateView().getRange();
 			System.out.println(range);
 		int startX = unit.getXPosition()-range;
 		int startY = unit.getYPosition()-range;
 		int endX = unit.getXPosition()+range;
 		int endY = unit.getYPosition()+range;		for(int i = startX; i<= endX ; i++){		for(int j = startY; j<= endY; j++){
-				if(state.inBounds(i, j)){
+				if(state.inBounds(i, j) && spaceInTowerRange(i,j,unit.getXPosition(),unit.getYPosition())){
 				board[i][j].setProbability(.75);
 				board[i][j].setHit((byte) 1);
 				}		}	}		}
@@ -47,7 +51,7 @@ import java.io.InputStream;import java.io.OutputStream;import java.util.ArrayL
 		private void checkNoTower(int i, int j,StateView state){
 			for(int x = i-4; x<=i+4; x++){
 				for(int y = j-4; y<=j+4;y++){
-					if(x==i && y==j ){
+					if(x==i && y==j || !spaceInTowerRange(i,j,x,y)){
 						
 					}
 					else{
